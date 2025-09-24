@@ -1,5 +1,6 @@
 
 
+
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { CATEGORIES, DEFAULT_SELECTIONS } from './constants';
 import type { Selections, AspectRatio, Category } from './types';
@@ -8,7 +9,6 @@ import OptionSelector from './components/OptionSelector';
 import ImageUploader from './components/ImageUploader';
 import LoadingSpinner from './components/LoadingSpinner';
 import ApiKeyInput from './components/ApiKeyInput';
-import PasswordProtection from './components/PasswordProtection';
 import { WandIcon, DownloadIcon, CloseIcon, RefreshIcon, DownloadAllIcon } from './components/IconComponents';
 
 type NotificationType = 'info' | 'warning' | 'error' | 'loading';
@@ -43,7 +43,6 @@ const getAspectRatioClassFromSelection = (selectionId: string): string => {
 
 
 const App: React.FC = () => {
-    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const [apiKey, setApiKey] = useState<string>(() => localStorage.getItem('gemini-api-key') || '');
     const [selections, setSelections] = useState<Selections>(DEFAULT_SELECTIONS);
     const [referenceImage, setReferenceImage] = useState<{ file: File; base64: string; mimeType: string; } | null>(null);
@@ -59,10 +58,6 @@ const App: React.FC = () => {
             localStorage.removeItem('gemini-api-key');
         }
     }, [apiKey]);
-    
-    const handleAuthenticationSuccess = () => {
-        setIsAuthenticated(true);
-    };
 
     const handleSaveApiKey = useCallback((key: string) => {
         setApiKey(key);
@@ -236,10 +231,6 @@ const App: React.FC = () => {
         }
     };
     
-    if (!isAuthenticated) {
-        return <PasswordProtection onSuccess={handleAuthenticationSuccess} />;
-    }
-
     if (!apiKey) {
         return (
             <div className="bg-gray-900 text-white min-h-screen flex items-center justify-center p-4">
