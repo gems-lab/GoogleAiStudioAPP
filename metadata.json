@@ -1,0 +1,5 @@
+{
+  "name": "AI 포토리얼리스틱 이미지 생성기",
+  "description": "An AI-powered application to generate photorealistic, cinematic images of Korean people by selecting various detailed options.",
+  "requestFramePermissions": []
+}
